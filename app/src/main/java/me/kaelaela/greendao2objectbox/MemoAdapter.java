@@ -10,7 +10,7 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
-import me.kaelaela.dao.Memo;
+import me.kaelaela.greendao2objectbox.entity.Memo;
 
 public class MemoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

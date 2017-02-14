@@ -10,10 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import java.util.Date;
 import java.util.List;
-import me.kaelaela.dao.DaoMaster;
-import me.kaelaela.dao.DaoSession;
-import me.kaelaela.dao.Memo;
-import me.kaelaela.dao.MemoDao;
+import me.kaelaela.greendao2objectbox.entity.DaoMaster;
+import me.kaelaela.greendao2objectbox.entity.DaoSession;
+import me.kaelaela.greendao2objectbox.entity.Memo;
+import me.kaelaela.greendao2objectbox.entity.MemoDao;
 
 public class MainActivity extends AppCompatActivity {
 
