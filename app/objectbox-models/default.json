@@ -1,0 +1,58 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:7538348600609136199",
+      "lastPropertyId": "2:5641871266553502453",
+      "name": "Editor",
+      "properties": [
+        {
+          "id": "1:6761391438977587202",
+          "name": "id"
+        },
+        {
+          "id": "2:5641871266553502453",
+          "name": "name"
+        }
+      ]
+    },
+    {
+      "id": "2:888248966950571017",
+      "lastPropertyId": "5:7070127229830573570",
+      "name": "Memo",
+      "properties": [
+        {
+          "id": "1:5012258071449409494",
+          "name": "id"
+        },
+        {
+          "id": "2:1833334106343433320",
+          "name": "content"
+        },
+        {
+          "id": "3:761884853761469431",
+          "name": "editDate"
+        },
+        {
+          "id": "4:8377259746113752237",
+          "name": "isDone"
+        },
+        {
+          "id": "5:7070127229830573570",
+          "indexId": "1:1353168279122550751",
+          "name": "editorId"
+        }
+      ]
+    }
+  ],
+  "lastEntityId": "2:888248966950571017",
+  "lastIndexId": "1:1353168279122550751",
+  "lastSequenceId": "0:0",
+  "modelVersion": 2,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "version": 1
+}

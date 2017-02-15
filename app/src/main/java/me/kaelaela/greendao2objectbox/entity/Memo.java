@@ -1,42 +1,30 @@
 package me.kaelaela.greendao2objectbox.entity;
 
-import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.Index;
-import org.greenrobot.greendao.annotation.ToOne;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.DaoException;
-import org.greenrobot.greendao.annotation.NotNull;
+import io.objectbox.annotation.Entity;
+import io.objectbox.annotation.Id;
+import io.objectbox.annotation.Relation;
+import io.objectbox.annotation.Generated;
+import io.objectbox.BoxStore;
+import io.objectbox.annotation.apihint.Internal;
+import io.objectbox.exception.DbDetachedException;
+import io.objectbox.relation.ToOne;
+import io.objectbox.Box;
+import io.objectbox.exception.DbException;
 
-@Entity(active = true)
-public class Memo {
+@Entity public class Memo {
 
-    @Id
-    @Index
-    private Long id;
+    @Id private Long id;
     private String content;
     private java.util.Date editDate;
     private Boolean isDone;
     private long editorId;
 
-    @ToOne(joinProperty = "editorId")
-    private Editor editor;
+    @Relation private Editor editor;
     /** Used to resolve relations */
-    @Generated(hash = 2040040024)
-    private transient DaoSession daoSession;
-    /** Used for active entity operations. */
-    @Generated(hash = 1945564409)
-    private transient MemoDao myDao;
-    @Generated(hash = 867044310)
-    private transient Long editor__resolvedKey;
-
-    public Memo(Long id) {
-        this.id = id;
-    }
+    @Internal @Generated(hash = 1307364262) transient BoxStore __boxStore;
 
     @Generated(hash = 1105486614)
-    public Memo(Long id, String content, java.util.Date editDate, Boolean isDone,
-            long editorId) {
+    public Memo(Long id, String content, java.util.Date editDate, Boolean isDone, long editorId) {
         this.id = id;
         this.content = content;
         this.editDate = editDate;
@@ -44,15 +32,14 @@ public class Memo {
         this.editorId = editorId;
     }
 
-    @Generated(hash = 1901232184)
-    public Memo() {
+    @Generated(hash = 1901232184) public Memo() {
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -88,80 +75,50 @@ public class Memo {
         this.editorId = editorId;
     }
 
-    /** To-one relationship, resolved on first access. */
-    @Generated(hash = 2042696939)
-    public Editor getEditor() {
-        long __key = this.editorId;
-        if (editor__resolvedKey == null || !editor__resolvedKey.equals(__key)) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
-            }
-            EditorDao targetDao = daoSession.getEditorDao();
-            Editor editorNew = targetDao.load(__key);
-            synchronized (this) {
-                editor = editorNew;
-                editor__resolvedKey = __key;
-            }
+    @Internal @Generated(hash = 1920969395) private transient ToOne<Memo, Editor> editor__toOne;
+
+    /** See {@link io.objectbox.relation.ToOne} for details. */
+    @Generated(hash = 148485060) public synchronized ToOne<Memo, Editor> getEditor__toOne() {
+        if (editor__toOne == null) {
+            editor__toOne = new ToOne<>(this, Memo_.editorId, Editor.class);
         }
+        return editor__toOne;
+    }
+
+    /** To-one relationship, resolved on first access. */
+    @Generated(hash = 460380860) public Editor getEditor() {
+        editor = getEditor__toOne().getTarget(this.editorId);
         return editor;
     }
 
-    /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 1793132172)
-    public void setEditor(@NotNull Editor editor) {
-        if (editor == null) {
-            throw new DaoException(
-                    "To-one property 'editorId' has not-null constraint; cannot set to-one to null");
-        }
-        synchronized (this) {
-            this.editor = editor;
-            editorId = editor.getId();
-            editor__resolvedKey = editorId;
-        }
+    /** Set the to-one relation including its ID property. */
+    @Generated(hash = 1734659424) public void setEditor(Editor editor) {
+        getEditor__toOne().setTarget(editor);
+        this.editor = editor;
     }
 
     /**
-     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
-     * Entity must attached to an entity context.
+     * Removes entity from its object box. Entity must attached to an entity context.
      */
-    @Generated(hash = 128553479)
-    public void delete() {
-        if (myDao == null) {
-            throw new DaoException("Entity is detached from DAO context");
+    @Generated(hash = 1678107097) public void remove() {
+        if (__boxStore == null) {
+            throw new DbDetachedException();
         }
-        myDao.delete(this);
+        __boxStore.boxFor(Memo.class).remove(this);
     }
 
     /**
-     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
+     * Puts the entity in its object box.
      * Entity must attached to an entity context.
      */
-    @Generated(hash = 1942392019)
-    public void refresh() {
-        if (myDao == null) {
-            throw new DaoException("Entity is detached from DAO context");
+    @Generated(hash = 2028983094) public void put() {
+        if (__boxStore == null) {
+            throw new DbDetachedException();
         }
-        myDao.refresh(this);
+        __boxStore.boxFor(Memo.class).put(this);
     }
 
-    /**
-     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#update(Object)}.
-     * Entity must attached to an entity context.
-     */
-    @Generated(hash = 713229351)
-    public void update() {
-        if (myDao == null) {
-            throw new DaoException("Entity is detached from DAO context");
-        }
-        myDao.update(this);
+    public void setId(Long id) {
+        this.id = id;
     }
-
-    /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 1319799281)
-    public void __setDaoSession(DaoSession daoSession) {
-        this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getMemoDao() : null;
-    }
-
 }

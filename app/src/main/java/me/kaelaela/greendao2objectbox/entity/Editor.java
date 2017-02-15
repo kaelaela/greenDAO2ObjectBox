@@ -1,47 +1,31 @@
 package me.kaelaela.greendao2objectbox.entity;
 
+import io.objectbox.annotation.Entity;
+import io.objectbox.annotation.Id;
+import io.objectbox.annotation.Relation;
 import java.util.List;
-import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.Index;
-import org.greenrobot.greendao.annotation.JoinProperty;
-import org.greenrobot.greendao.annotation.OrderBy;
-import org.greenrobot.greendao.annotation.ToMany;
-import org.greenrobot.greendao.annotation.Generated;
-import org.greenrobot.greendao.DaoException;
+import io.objectbox.annotation.Generated;
+import io.objectbox.Box;
+import io.objectbox.BoxStore;
+import io.objectbox.annotation.apihint.Internal;
+import io.objectbox.exception.DbDetachedException;
+import io.objectbox.exception.DbException;
 
-@Entity(active = true)
-public class Editor {
+@Entity public class Editor {
 
-    @Id
-    @Index
-    private long id;
+    @Id private long id;
     private String name;
 
-    @ToMany(joinProperties = {
-        @JoinProperty(name = "id", referencedName = "id")
-    })
-    @OrderBy("editDate ASC")
-    private List<Memo> memos;
+    @Relation(idProperty = "editorId") private List<Memo> memos;
     /** Used to resolve relations */
-    @Generated(hash = 2040040024)
-    private transient DaoSession daoSession;
-    /** Used for active entity operations. */
-    @Generated(hash = 1547564519)
-    private transient EditorDao myDao;
+    @Internal @Generated(hash = 1307364262) transient BoxStore __boxStore;
 
-    public Editor(long id) {
-        this.id = id;
-    }
-
-    @Generated(hash = 2043310923)
-    public Editor(long id, String name) {
+    @Generated(hash = 2043310923) public Editor(long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    @Generated(hash = 33843963)
-    public Editor() {
+    @Generated(hash = 33843963) public Editor() {
     }
 
     public long getId() {
@@ -64,15 +48,15 @@ public class Editor {
      * To-many relationship, resolved on first access (and after reset).
      * Changes to to-many relations are not persisted, make changes to the target entity.
      */
-    @Generated(hash = 1472557445)
-    public List<Memo> getMemos() {
+    @Generated(hash = 417681720) public List<Memo> getMemos() {
         if (memos == null) {
-            final DaoSession daoSession = this.daoSession;
-            if (daoSession == null) {
-                throw new DaoException("Entity is detached from DAO context");
+            final BoxStore boxStore = this.__boxStore;
+            if (boxStore == null) {
+                throw new DbDetachedException();
             }
-            MemoDao targetDao = daoSession.getMemoDao();
-            List<Memo> memosNew = targetDao._queryEditor_Memos(id);
+            Box<Memo> box = boxStore.boxFor(Memo.class);
+            int targetEntityId = boxStore.getEntityIdOrThrow(Memo.class);
+            List<Memo> memosNew = box.getBacklinkEntities(targetEntityId, Memo_.editorId, id);
             synchronized (this) {
                 if (memos == null) {
                     memos = memosNew;
@@ -83,52 +67,28 @@ public class Editor {
     }
 
     /** Resets a to-many relationship, making the next get call to query for a fresh result. */
-    @Generated(hash = 1481839123)
-    public synchronized void resetMemos() {
+    @Generated(hash = 1481839123) public synchronized void resetMemos() {
         memos = null;
     }
 
     /**
-     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
-     * Entity must attached to an entity context.
+     * Removes entity from its object box. Entity must attached to an entity context.
      */
-    @Generated(hash = 128553479)
-    public void delete() {
-        if (myDao == null) {
-            throw new DaoException("Entity is detached from DAO context");
+    @Generated(hash = 1905125636) public void remove() {
+        if (__boxStore == null) {
+            throw new DbDetachedException();
         }
-        myDao.delete(this);
+        __boxStore.boxFor(Editor.class).remove(this);
     }
 
     /**
-     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
+     * Puts the entity in its object box.
      * Entity must attached to an entity context.
      */
-    @Generated(hash = 1942392019)
-    public void refresh() {
-        if (myDao == null) {
-            throw new DaoException("Entity is detached from DAO context");
+    @Generated(hash = 1966399076) public void put() {
+        if (__boxStore == null) {
+            throw new DbDetachedException();
         }
-        myDao.refresh(this);
+        __boxStore.boxFor(Editor.class).put(this);
     }
-
-    /**
-     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#update(Object)}.
-     * Entity must attached to an entity context.
-     */
-    @Generated(hash = 713229351)
-    public void update() {
-        if (myDao == null) {
-            throw new DaoException("Entity is detached from DAO context");
-        }
-        myDao.update(this);
-    }
-
-    /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 690583333)
-    public void __setDaoSession(DaoSession daoSession) {
-        this.daoSession = daoSession;
-        myDao = daoSession != null ? daoSession.getEditorDao() : null;
-    }
-
 }

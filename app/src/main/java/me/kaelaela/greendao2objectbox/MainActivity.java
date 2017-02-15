@@ -1,6 +1,5 @@
 package me.kaelaela.greendao2objectbox;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,23 +9,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import java.util.Date;
 import java.util.List;
-import me.kaelaela.greendao2objectbox.entity.DaoMaster;
 import me.kaelaela.greendao2objectbox.entity.DaoSession;
 import me.kaelaela.greendao2objectbox.entity.Memo;
 import me.kaelaela.greendao2objectbox.entity.MemoDao;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String DB_NAME = "sample-db";
-
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, DB_NAME, null);
-        SQLiteDatabase db = helper.getWritableDatabase();
-        DaoMaster master = new DaoMaster(db);
-        final DaoSession session = master.newSession();
+        final DaoSession session =
+                ((GreenDao2ObjectBoxApplication) getApplication()).getDaoSession();
 
         final EditText memoEditor = (EditText) findViewById(R.id.memo_editor);
         final Button saveButton = (Button) findViewById(R.id.save_button);
