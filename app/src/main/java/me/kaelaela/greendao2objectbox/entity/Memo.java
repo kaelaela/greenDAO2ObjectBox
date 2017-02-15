@@ -4,12 +4,13 @@ import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
 import io.objectbox.annotation.Relation;
 import io.objectbox.annotation.Generated;
+import io.objectbox.Box;
 import io.objectbox.BoxStore;
 import io.objectbox.annotation.apihint.Internal;
 import io.objectbox.exception.DbDetachedException;
-import io.objectbox.relation.ToOne;
-import io.objectbox.Box;
 import io.objectbox.exception.DbException;
+import io.objectbox.relation.ToOne;
+import java.util.Date;
 
 @Entity public class Memo {
 
@@ -21,10 +22,13 @@ import io.objectbox.exception.DbException;
 
     @Relation private Editor editor;
     /** Used to resolve relations */
-    @Internal @Generated(hash = 1307364262) transient BoxStore __boxStore;
+    @Internal
+    @Generated(hash = 1307364262)
+    transient BoxStore __boxStore;
 
     @Generated(hash = 1105486614)
-    public Memo(Long id, String content, java.util.Date editDate, Boolean isDone, long editorId) {
+    public Memo(Long id, String content, java.util.Date editDate, Boolean isDone,
+            long editorId) {
         this.id = id;
         this.content = content;
         this.editDate = editDate;
@@ -32,14 +36,15 @@ import io.objectbox.exception.DbException;
         this.editorId = editorId;
     }
 
-    @Generated(hash = 1901232184) public Memo() {
+    @Generated(hash = 1901232184)
+    public Memo() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -75,10 +80,13 @@ import io.objectbox.exception.DbException;
         this.editorId = editorId;
     }
 
-    @Internal @Generated(hash = 1920969395) private transient ToOne<Memo, Editor> editor__toOne;
+    @Internal
+    @Generated(hash = 1920969395)
+    private transient ToOne<Memo, Editor> editor__toOne;
 
     /** See {@link io.objectbox.relation.ToOne} for details. */
-    @Generated(hash = 148485060) public synchronized ToOne<Memo, Editor> getEditor__toOne() {
+    @Generated(hash = 148485060)
+    public synchronized ToOne<Memo, Editor> getEditor__toOne() {
         if (editor__toOne == null) {
             editor__toOne = new ToOne<>(this, Memo_.editorId, Editor.class);
         }
@@ -86,13 +94,15 @@ import io.objectbox.exception.DbException;
     }
 
     /** To-one relationship, resolved on first access. */
-    @Generated(hash = 460380860) public Editor getEditor() {
+    @Generated(hash = 460380860)
+    public Editor getEditor() {
         editor = getEditor__toOne().getTarget(this.editorId);
         return editor;
     }
 
     /** Set the to-one relation including its ID property. */
-    @Generated(hash = 1734659424) public void setEditor(Editor editor) {
+    @Generated(hash = 1734659424)
+    public void setEditor(Editor editor) {
         getEditor__toOne().setTarget(editor);
         this.editor = editor;
     }
@@ -100,7 +110,8 @@ import io.objectbox.exception.DbException;
     /**
      * Removes entity from its object box. Entity must attached to an entity context.
      */
-    @Generated(hash = 1678107097) public void remove() {
+    @Generated(hash = 1678107097)
+    public void remove() {
         if (__boxStore == null) {
             throw new DbDetachedException();
         }
@@ -111,14 +122,11 @@ import io.objectbox.exception.DbException;
      * Puts the entity in its object box.
      * Entity must attached to an entity context.
      */
-    @Generated(hash = 2028983094) public void put() {
+    @Generated(hash = 2028983094)
+    public void put() {
         if (__boxStore == null) {
             throw new DbDetachedException();
         }
         __boxStore.boxFor(Memo.class).put(this);
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }

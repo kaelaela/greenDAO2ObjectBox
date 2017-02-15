@@ -18,14 +18,18 @@ import io.objectbox.exception.DbException;
 
     @Relation(idProperty = "editorId") private List<Memo> memos;
     /** Used to resolve relations */
-    @Internal @Generated(hash = 1307364262) transient BoxStore __boxStore;
+    @Internal
+    @Generated(hash = 1307364262)
+    transient BoxStore __boxStore;
 
-    @Generated(hash = 2043310923) public Editor(long id, String name) {
+    @Generated(hash = 2043310923)
+    public Editor(long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    @Generated(hash = 33843963) public Editor() {
+    @Generated(hash = 33843963)
+    public Editor() {
     }
 
     public long getId() {
@@ -48,7 +52,8 @@ import io.objectbox.exception.DbException;
      * To-many relationship, resolved on first access (and after reset).
      * Changes to to-many relations are not persisted, make changes to the target entity.
      */
-    @Generated(hash = 417681720) public List<Memo> getMemos() {
+    @Generated(hash = 417681720)
+    public List<Memo> getMemos() {
         if (memos == null) {
             final BoxStore boxStore = this.__boxStore;
             if (boxStore == null) {
@@ -56,7 +61,8 @@ import io.objectbox.exception.DbException;
             }
             Box<Memo> box = boxStore.boxFor(Memo.class);
             int targetEntityId = boxStore.getEntityIdOrThrow(Memo.class);
-            List<Memo> memosNew = box.getBacklinkEntities(targetEntityId, Memo_.editorId, id);
+            List<Memo> memosNew = box.getBacklinkEntities(targetEntityId,
+                    Memo_.editorId, id);
             synchronized (this) {
                 if (memos == null) {
                     memos = memosNew;
@@ -67,14 +73,16 @@ import io.objectbox.exception.DbException;
     }
 
     /** Resets a to-many relationship, making the next get call to query for a fresh result. */
-    @Generated(hash = 1481839123) public synchronized void resetMemos() {
+    @Generated(hash = 1481839123)
+    public synchronized void resetMemos() {
         memos = null;
     }
 
     /**
      * Removes entity from its object box. Entity must attached to an entity context.
      */
-    @Generated(hash = 1905125636) public void remove() {
+    @Generated(hash = 1905125636)
+    public void remove() {
         if (__boxStore == null) {
             throw new DbDetachedException();
         }
@@ -85,7 +93,8 @@ import io.objectbox.exception.DbException;
      * Puts the entity in its object box.
      * Entity must attached to an entity context.
      */
-    @Generated(hash = 1966399076) public void put() {
+    @Generated(hash = 1966399076)
+    public void put() {
         if (__boxStore == null) {
             throw new DbDetachedException();
         }

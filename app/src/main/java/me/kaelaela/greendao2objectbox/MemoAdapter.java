@@ -15,17 +15,6 @@ import me.kaelaela.greendao2objectbox.entity.Memo;
 public class MemoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<Memo> memoList = new ArrayList<>();
-    private OnItemCheckListener listener;
-
-    public interface OnItemCheckListener {
-        void onItemCheck(Memo memo);
-
-        void onItemDelete(Memo memo);
-    }
-
-    public MemoAdapter(OnItemCheckListener listener) {
-        this.listener = listener;
-    }
 
     public void addMemo(Memo memo) {
         memoList.add(memo);
@@ -55,33 +44,35 @@ public class MemoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private class MemoViewHolder extends RecyclerView.ViewHolder {
 
+        private Memo memo;
         public MemoViewHolder(View itemView) {
             super(itemView);
         }
 
-        public void set(final Memo memo) {
-            ((TextView) itemView.findViewById(R.id.memo)).setText(memo.getContent());
+        public void set(Memo memo) {
+            this.memo = memo;
+            ((TextView) itemView.findViewById(R.id.memo)).setText(this.memo.getContent());
             final CheckBox checkBox = (CheckBox) itemView.findViewById(R.id.done_check);
-            checkBox.setChecked(memo.getIsDone());
+            checkBox.setChecked(this.memo.getIsDone());
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    memo.setIsDone(isChecked);
-                    listener.onItemCheck(memo);
+                    MemoViewHolder.this.memo.setIsDone(isChecked);
+                    MemoViewHolder.this.memo.put();
                 }
             });
             Button deleteButton = (Button) itemView.findViewById(R.id.delete_button);
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
-                    listener.onItemDelete(memo);
                     memoList.remove(getAdapterPosition());
                     notifyItemRemoved(getAdapterPosition());
+                    MemoViewHolder.this.memo.remove();
                 }
             });
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
-                    memo.setIsDone(!checkBox.isChecked());
-                    listener.onItemCheck(memo);
+                    MemoViewHolder.this.memo.setIsDone(!checkBox.isChecked());
+                    MemoViewHolder.this.memo.put();
                     checkBox.setChecked(!checkBox.isChecked());
                 }
             });
